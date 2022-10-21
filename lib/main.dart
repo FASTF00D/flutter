@@ -53,6 +53,7 @@ class MusicLayoutHomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              _makeBottomBar()
             ],
           ),
         ),
@@ -278,6 +279,59 @@ class MusicLayoutHomePage extends StatelessWidget {
           return Image.asset('images/vova.png');
         }),
       ),
+    );
+  }
+
+  Container _makeBottomBar() {
+    return Container(
+      height: 60,
+      color: Color(0xFF424242),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5, top: 3),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildTabItem(Icons.play_circle, 'Listen Now'),
+            buildTabItem(Icons.grid_view_rounded, 'Browse'),
+            buildTabItem(Icons.radio_outlined, 'Radio'),
+            buildTabItemActive(Icons.library_music_rounded, 'Library'),
+            buildTabItem(Icons.search, 'Search'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Column buildTabItem(IconData icon, String title) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.grey, size: 28,),
+        Padding(
+          padding: const EdgeInsets.only(top: 1),
+          child: Text(title, style: const TextStyle(
+            color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),),
+        ),
+      ],
+    );
+  }
+
+  Column buildTabItemActive(IconData icon, String title) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.red, size: 28,),
+        Padding(
+          padding: const EdgeInsets.only(top: 1),
+          child: Text(title, style: const TextStyle(
+            color: Colors.red,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),),
+        ),
+      ],
     );
   }
 }

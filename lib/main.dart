@@ -276,7 +276,15 @@ class MusicLayoutHomePage extends StatelessWidget {
         mainAxisSpacing: 8,
         crossAxisSpacing: 8,
         children: List.generate(10, (index) {
-          return Image.asset('images/vova.png');
+          return Expanded(
+              child: Column(
+                children: [
+                  Expanded(child: Image.asset('images/vova.png')),
+                  const Text('gggg', style: TextStyle(
+                    color: Colors.white
+                  ),)
+                ],
+              ));
         }),
       ),
     );

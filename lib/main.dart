@@ -1,347 +1,168 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const LayoutTrainingApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class LayoutTrainingApp extends StatelessWidget {
+  const LayoutTrainingApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MusicLayoutHomePage(),
+      home: LayoutTrainingMainScreen(),
     );
   }
 }
 
-class MusicLayoutHomePage extends StatelessWidget {
-  const MusicLayoutHomePage({Key? key}) : super(key: key);
+class LayoutTrainingMainScreen extends StatelessWidget {
+  const LayoutTrainingMainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: Colors.black,
-          appBar: AppBar(
-            backgroundColor: Colors.black,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: const [
-                Text('Edit', style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),)
-              ],
-            ),
-    ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      buildNewReleaseCard(),
-                      buildLibraryView(),
-                      buildRecentlyAddedContainer(),
-                    ],
-                  ),
-                ),
-              ),
-              _makeBottomBar()
-            ],
-          ),
+      appBar: AppBar(title: const Text('Layout Training')),
+      body: ChatCell(
+        model: ChatCellModel(
+          'IT Step Flutter Course',
+          lastMessage:
+              'Як мене пофіксати щоб це не було по центру. О тепер все працює норм і я задоволентй! Але чи весь текст вміститься?',
+          lastMessageSendDate: '12:38',
+          countMessages: '10',
+          isMuted: true,
+          isPremium: true,
+          isVerified: true
         ),
       ),
     );
+  }
 }
 
-  Padding buildLibraryView() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15,right: 0),
-      child: Container(
-        width: 900,
-        height: 330,
-        color: Colors.black,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: buildLibraryItem(),
-            ),
-            buildLibraryList(Icons.queue_music, 'Playlist'),
-            buildLibraryList(Icons.mic_rounded, 'Artists'),
-            buildLibraryList(Icons.my_library_music_outlined, 'Albums'),
-            buildLibraryList(Icons.music_note, 'Songs'),
-            buildLibraryListLast(Icons.download_for_offline_outlined, 'Downloaded')
-          ],
-        ),
+class ChatCellModel {
+  final String name;
+  final String? imageUrl;
+  final String? lastMessage;
+  final String? lastMessageSendDate;
+  final String? countMessages;
+  final bool isMuted;
+  final bool isPremium;
+  final bool isVerified;
 
-      ),
-    );
-  }
+  ChatCellModel(
+    this.name, {
+    this.imageUrl,
+    required this.lastMessage,
+    required this.lastMessageSendDate,
+    this.countMessages,
+    this.isMuted = false,
+    this.isPremium = false,
+    this.isVerified = false,
+  });
+}
 
-  Padding buildLibraryList(IconData icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.white,
-                      width: 0.3,
-                    )
-                  )
-                ),
-                child: buildLibraryListItem(icon, title),
-      ),
-    );
-  }
+class ChatCell extends StatelessWidget {
+  const ChatCell({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
 
-  Padding buildLibraryListLast(IconData icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Container(
-        decoration: const BoxDecoration(
-            border: Border(
-                top: BorderSide(
-                  color: Colors.white,
-                  width: 0.3,
-                ),
-                bottom: BorderSide(
-                  color: Colors.white,
-                  width: 0.3,
-                )
-            )
-        ),
-        child: buildLibraryListItem(icon, title),
-      ),
-    );
-  }
+  final ChatCellModel model;
 
-  Padding buildLibraryListItem(IconData icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, right: 0, bottom: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: Colors.red, size: 32,),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(title, style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24
-                ),),
-              ),
-            ],
-          ),
-          const Icon(Icons.keyboard_arrow_right, color: Colors.grey,),
-        ],
-      ),
-    );
-  }
-
-  Row buildLibraryItem() {
-    return Row(
-            children: const [
-              Text('Library', style: TextStyle(
-                color: Colors.white,
-                fontSize: 32,
-                fontWeight: FontWeight.bold
-              ),)
-            ],
-          );
-  }
-
-  Padding buildNewReleaseCard() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: Container(
-
-          width: 500,
-          height: 100,
-          decoration: BoxDecoration(
-            color: Color(0xFF424242),
-            borderRadius: BorderRadius.circular(15)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, top: 5, right: 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: const [
-                        Icon(Icons.music_note, color: Colors.white,),
-                        Text('Music', style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: Colors.white,
-                        ),)
-                    ],
-                    ),
-                    Icon(Icons.close_sharp, color: Colors.grey,)
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: Image.asset("images/vova.png"))
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('NEW RELEASE', style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 8,
-
-                              ),),
-                              Text('Вова, ї*аш їх - Single', style: TextStyle(
-                                  color: Colors.white
-                              ),),
-                              Text('Мюслі UA', style: TextStyle(
-                                  color: Colors.grey,
-                                fontSize: 10
-                              ),)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
-                ),
-              ],
-            ),
-          ),
-        ),
-    );
-  }
-
-  Padding buildRecentlyAddedContainer() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 8),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Row(
-              children: const [
-               Text('Recently Added', style: TextStyle(
-                 color: Colors.white,
-                 fontSize: 24,
-                 fontWeight: FontWeight.bold
-               ),
-               ),
-            ]
-            ),
-          ),
-          buildPhotosGrid()
-        ],
-      ),
-    );
-  }
-
-  Container buildPhotosGrid() {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      height: 500,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5)
-      ),
-      child: GridView.count(
-        shrinkWrap: true,
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        children: List.generate(10, (index) {
-          return Expanded(
-              child: Column(
-                children: [
-                  Expanded(child: Image.asset('images/vova.png')),
-                  const Text('gggg', style: TextStyle(
-                    color: Colors.white
-                  ),)
-                ],
-              ));
-        }),
-      ),
-    );
-  }
-
-  Container _makeBottomBar() {
-    return Container(
-      height: 60,
-      color: Color(0xFF424242),
+      color: Colors.grey.shade800,
       child: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, top: 3),
+        padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            buildTabItem(Icons.play_circle, 'Listen Now'),
-            buildTabItem(Icons.grid_view_rounded, 'Browse'),
-            buildTabItem(Icons.radio_outlined, 'Radio'),
-            buildTabItemActive(Icons.library_music_rounded, 'Library'),
-            buildTabItem(Icons.search, 'Search'),
+            const CircleAvatar(radius: 30.0),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                model.name,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            if (model.isPremium)
+                              const Icon(Icons.star,
+                                color: Colors.yellow,
+                              ),
+                            if (model.isMuted)
+                              const Icon(
+                                Icons.volume_mute,
+                                color: Colors.grey,
+                              ),
+                            if (model.isVerified)
+                              const Icon(
+                                Icons.verified,
+                                color: Colors.blue,
+                              )
+                          ],
+                        ),
+                      ),
+                      if (model.lastMessageSendDate != null)
+                        Text(
+                          model.lastMessageSendDate!,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          model.lastMessage ?? 'No messages yet',
+                          style: const TextStyle(color: Colors.grey),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 3,
+                              color: Colors.grey
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(1.0),
+                            child: Text(model.countMessages ?? '0',
+                            style: const TextStyle(
+                              color: Colors.black
+                            ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-
-  Column buildTabItem(IconData icon, String title) {
-    return Column(
-      children: [
-        Icon(icon, color: Colors.grey, size: 28,),
-        Padding(
-          padding: const EdgeInsets.only(top: 1),
-          child: Text(title, style: const TextStyle(
-            color: Colors.grey,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),),
-        ),
-      ],
-    );
-  }
-
-  Column buildTabItemActive(IconData icon, String title) {
-    return Column(
-      children: [
-        Icon(icon, color: Colors.red, size: 28,),
-        Padding(
-          padding: const EdgeInsets.only(top: 1),
-          child: Text(title, style: const TextStyle(
-            color: Colors.red,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),),
-        ),
-      ],
-    );
-  }
 }
-
-
